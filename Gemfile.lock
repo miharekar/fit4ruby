@@ -14,7 +14,7 @@ GEM
     pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    rake (0.9.6)
+    rake (12.3.3)
     rspec (3.8.0)
       rspec-core (~> 3.8.0)
       rspec-expectations (~> 3.8.0)
@@ -37,7 +37,7 @@ DEPENDENCIES
   bundler (>= 1.6.4)
   fit4ruby!
   pry (>= 0.12)
-  rake (~> 0.9.6)
+  rake (~> 12.3.3)
   rspec (>= 3.8)
   yard (~> 0.9.20)
 
