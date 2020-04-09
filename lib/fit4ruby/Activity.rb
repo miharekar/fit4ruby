@@ -91,19 +91,6 @@ module Fit4Ruby
       unless @timestamp && @timestamp >= Time.parse('1990-01-01T00:00:00+00:00')
         Log.fatal "Activity has no valid timestamp"
       end
-      unless @total_timer_time
-        Log.fatal "Activity has no valid total_timer_time"
-      end
-      unless @device_infos.length > 0
-        Log.fatal "Activity must have at least one device_info section"
-      end
-      @device_infos.each.with_index { |d, index| d.check(index) }
-      @sensor_settings.each.with_index { |s, index| s.check(index) }
-      unless @num_sessions == @sessions.count
-        Log.fatal "Activity record requires #{@num_sessions}, but "
-                  "#{@sessions.length} session records were found in the "
-                  "FIT file."
-      end
 
       # Records must have consecutively growing timestamps and distances.
       ts = Time.parse('1989-12-31')
@@ -576,4 +563,3 @@ module Fit4Ruby
   end
 
 end
-

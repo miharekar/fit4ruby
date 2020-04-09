@@ -49,11 +49,7 @@ module Fit4Ruby
 
     def set(name, value)
       ivar_name = '@' + name
-      unless instance_variable_defined?(ivar_name)
-        Log.warn("Unknown FIT record field '#{name}' in global message " +
-                 "#{@message.name} (#{@message.number}).")
-        return
-      end
+      return unless instance_variable_defined?(ivar_name)
       instance_variable_set(ivar_name, value)
     end
 
@@ -178,4 +174,3 @@ module Fit4Ruby
   end
 
 end
-

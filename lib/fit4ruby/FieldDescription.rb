@@ -29,12 +29,8 @@ module Fit4Ruby
 
     def create_global_definition(fit_entity)
       messages = fit_entity.developer_fit_messages
-      unless (gfm = GlobalFitMessages[@native_mesg_num])
-        Log.error "Developer field description references unknown global " +
-          "message number #{@native_mesg_num}"
-        return
-      end
-
+      return unless (gfm = GlobalFitMessages[@native_mesg_num])
+      
       if @developer_data_index >=
            fit_entity.top_level_record.developer_data_ids.size
          Log.error "Developer data index #{@developer_data_index} is too large"
@@ -66,4 +62,3 @@ module Fit4Ruby
   end
 
 end
-
