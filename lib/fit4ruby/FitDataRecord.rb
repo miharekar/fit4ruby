@@ -129,7 +129,7 @@ module Fit4Ruby
       fields = []
       global_fit_message.fields_by_number.each do |field_number, field|
         bin_data_type = FitDefinitionFieldBase.fit_type_to_bin_data(field.type)
-        fields << [ bin_data_type, field.name ]
+        fields << [ bin_data_type, "_#{field.name}" ]
       end
       bd = BinData::Struct.new(:endian => :little, :fields => fields)
 
@@ -145,7 +145,7 @@ module Fit4Ruby
           # we write the 'undefined' value instead.
           value = FitDefinitionFieldBase.undefined_value(field.type)
         end
-        bd[field.name] = value
+        bd["_#{field.name}"] = value
       end
 
       # Write the data record to the file.

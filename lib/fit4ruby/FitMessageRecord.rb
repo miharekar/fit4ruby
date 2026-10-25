@@ -52,7 +52,7 @@ module Fit4Ruby
       end
 
       if @name == 'file_id'
-        unless (entity_type = @message_record['type'].snapshot)
+        unless (entity_type = @message_record['_type'].snapshot)
           Log.fatal "Corrupted FIT file: file_id record has no type definition"
         end
         entity.set_type(entity_type)
@@ -72,7 +72,7 @@ module Fit4Ruby
 
       #(sorted_fields + @definition.developer_fields).each do |field|
       sorted_fields.each do |field|
-        value = @message_record[field.name].snapshot
+        value = @message_record["_#{field.name}"].snapshot
         # Strings are null byte terminated. There may be more bytes in the
         # file, but we have to discard all bytes from the first null byte
         # onwards.
@@ -115,7 +115,7 @@ module Fit4Ruby
         native_message_number = field_description.native_mesg_num
         native_field_number = field_description.native_field_num
 
-        value = @message_record[field.name].snapshot
+        value = @message_record["_#{field.name}"].snapshot
         value = nil if value == field.undefined_value
 
         if filter && fields_dump &&
@@ -178,7 +178,7 @@ module Fit4Ruby
       fields = []
       (definition.data_fields.to_a +
        definition.developer_fields.to_a).each do |field|
-        field_def = [ field.type, field.name ]
+        field_def = [ field.type, "_#{field.name}" ]
 
         # Some field types need special handling.
         if field.type == 'string'
@@ -186,7 +186,7 @@ module Fit4Ruby
           field_def << { :read_length => field.total_bytes }
         elsif field.is_array?
           # For Arrays we have to break them into separte fields.
-          field_def = [ :array, field.name,
+          field_def = [ :array, "_#{field.name}",
                         { :type => field.type.intern,
                           :initial_length =>
                             field.total_bytes / field.base_type_bytes } ]
